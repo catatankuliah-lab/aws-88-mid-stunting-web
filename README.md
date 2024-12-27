@@ -14,9 +14,6 @@
 
 [![Sneat - Bootstrap 5 HTML Admin Template Demo Screenshot](https://github.com/themeselection/ts-assets/blob/main/sneat/sneat-bootstrap-html-admin-template-free/marketing/sneat-hrml-free-banner-github.png)](https://themeselection.com/item/sneat-free-bootstrap-html-admin-template/)
 
-🚀 This project is a conversion of the Sneat Admin Template to React JS, providing a modern and responsive user interface for building powerful web applications. The original Sneat template was adapted to React components, making it easy to integrate into React-based projects.
-
-[View Demo React Sneat](https://react-sneat-bootstrap-admin-template.vercel.app/) Also check [ThemeSelection Sneat](https://demos.themeselection.com/sneat-bootstrap-html-admin-template-free/html/)
 ## Features
 
 - Responsive layout for various screen sizes.
@@ -27,7 +24,7 @@
 
 ## Usage
 
-1. Clone the repository: `git clone https://github.com/11Dwiwijaya/react-sneat-bootstrap-admin-template.git`
+1. Clone the repository: `git clone https://github.com/catatankuliah-lab/aws-88-mid-stunting-web.git`
 2. Install dependencies: `npm install`
 3. Run the development server: `npm start`
 4. Build for production: `npm run build`

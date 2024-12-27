@@ -1,19 +1,3 @@
-<p align="center">
-   <a href="https://react-sneat-bootstrap-admin-template.vercel.app/" target="_blank">
-      <img style="margin-right:20px" src="https://user-images.githubusercontent.com/749684/150333149-805037bc-8874-4a1f-876a-61a9683f8ef5.png" alt="sneat-logo" width="30px" height="auto">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1280px-React-icon.svg.png" alt="React Logo" height="45px">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Vitejs-logo.svg/615px-Vitejs-logo.svg.png" alt="Vite Logo" height="45px">
-   </a>
-</p>
-
-<h1 align="center">
-   <a href="https://react-sneat-bootstrap-admin-template.vercel.app/" target="_blank" align="center">
-      React Sneat - Free Bootstrap 5 Admin Template
-   </a>
-</h1>
-
-[![Sneat - Bootstrap 5 HTML Admin Template Demo Screenshot](https://github.com/themeselection/ts-assets/blob/main/sneat/sneat-bootstrap-html-admin-template-free/marketing/sneat-hrml-free-banner-github.png)](https://themeselection.com/item/sneat-free-bootstrap-html-admin-template/)
-
 ## Features
 
 - Responsive layout for various screen sizes.

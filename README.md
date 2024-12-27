@@ -13,17 +13,22 @@
    git clone https://github.com/catatankuliah-lab/aws-88-mid-stunting-web.git
    ```
 
-2. Install dependencies:
+2. Change directory: 
+   ```
+   cd aws-88-mid-stunting-web
+   ```
+
+3. Install dependencies:
    ```
    npm install
    ```
    
-3. Build for development:
+4. Build for development:
    ```
    npm run dev
    ```
 
-4. Build for production:
+5. Build for production:
    ```
    npm run build
    ```

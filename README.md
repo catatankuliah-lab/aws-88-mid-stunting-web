@@ -24,7 +24,9 @@
 
 ## Usage
 
-1. Clone the repository: `git clone https://github.com/catatankuliah-lab/aws-88-mid-stunting-web.git`
+1. Clone the repository: 
+```bash git clone https://github.com/catatankuliah-lab/aws-88-mid-stunting-web.git```
+
 2. Install dependencies: `npm install`
 3. Run the development server: `npm start`
 4. Build for production: `npm run build`

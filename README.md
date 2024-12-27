@@ -25,20 +25,24 @@
 ## Usage
 
 1. Clone the repository: 
-   ```bash
+   ```
    git clone https://github.com/catatankuliah-lab/aws-88-mid-stunting-web.git
+   ```
 
 2. Install dependencies:
-```bash
+   ```
    npm install
+   ```
    
 3. Build for development:
-```bash
+   ```
    npm run dev
+   ```
 
 4. Build for production:
-```bash
+   ```
    npm run build
+   ```
 
 ## Folder Structure
 

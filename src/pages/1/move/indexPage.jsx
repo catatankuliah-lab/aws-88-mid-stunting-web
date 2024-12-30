@@ -28,7 +28,7 @@ const IndexPage = () => {
     const [selectedKantor, setSelectedKantor] = useState(null);
     const [selectedKantorInit, setSelectedKantorInit] = useState(null);
 
-    const [dataPO, setDataPO] = useState([]);
+    const [dataMove, setdataMove] = useState([]);
 
 
     const [formFilter, setFormFilter] = useState({
@@ -152,7 +152,7 @@ const IndexPage = () => {
         return `${day}/${month}/${year}`;
     };
 
-    const getPO = async () => {
+    const getMove = async () => {
         if (!selectedAlokasi) {
             Swal.fire({
                 title: 'Filter Data',
@@ -170,20 +170,20 @@ const IndexPage = () => {
         }
         try {
             const queryParams = new URLSearchParams(formFilter).toString();
-            const response = await axios.get(`http://localhost:3089/api/v1/po/filter?${queryParams}`, {
+            const response = await axios.get(`http://localhost:3089/api/v1/move/filter?${queryParams}`, {
                 headers: {
                     Authorization: token,
                 }
             });
             if (response.data.data) {
                 const data = Array.isArray(response.data.data) ? response.data.data : [response.data.data];
-                setDataPO(data);
+                setdataMove(data);
             } else {
-                setDataPO([]);
+                setdataMove([]);
                 console.log('No data found for the filters');
             }
         } catch (error) {
-            setDataPO([]);
+            setdataMove([]);
             console.error('Error fetching PO data:', error);
         }
     };
@@ -234,59 +234,59 @@ const IndexPage = () => {
                         </div>
                         <div className="col-md-3 col-sm-12 mb-3">
                             <label htmlFor="" className="form-label">Tampilkan</label>
-                            <button type="button" onClick={getPO} className="btn btn-primary w-100">TAMPILKAN</button>
+                            <button type="button" onClick={getMove} className="btn btn-primary w-100">TAMPILKAN</button>
                         </div>
                         <div className="col-lg-12 mt-3">
                             <div className="row">
                                 <div className="col-md-12 mb-4 mb-md-0">
                                     <div className="accordion mt-3" id="accordion_po">
-                                        {dataPO.map(itempo => (
-                                            <div key={itempo.id_po} className="card accordion-item">
-                                                <h2 className="accordion-header px-2" id={`heading${itempo.id_po}`}>
+                                        {dataMove.map(itemmove => (
+                                            <div key={itemmove.id_po} className="card accordion-item">
+                                                <h2 className="accordion-header px-2" id={`heading${itemmove.id_po}`}>
                                                     <button
                                                         type="button"
                                                         className={`accordion-button accordion-button-primary collapsed`}
                                                         data-bs-toggle="collapse"
-                                                        data-bs-target={`#accordion${itempo.id_po}`}
+                                                        data-bs-target={`#accordion${itemmove.id_po}`}
                                                         aria-expanded="false"
-                                                        aria-controls={`accordion${itempo.id_po}`}
+                                                        aria-controls={`accordion${itemmove.id_po}`}
                                                     >
-                                                        <span className='text-primary fw-bold' >{formatDate(itempo.tanggal_po)} | {itempo.nomor_po}</span>
+                                                        <span className='text-primary fw-bold' >{formatDate(itemmove.tanggal_po)} | {itemmove.nomor_po}</span>
                                                     </button>
                                                 </h2>
-                                                <div id={`accordion${itempo.id_po}`} className="accordion-collapse collapse" data-bs-parent="#accordion_po">
+                                                <div id={`accordion${itemmove.id_po}`} className="accordion-collapse collapse" data-bs-parent="#accordion_po">
                                                     <div className="accordion-body" style={{ marginTop: "-15px" }} >
                                                         <div className="px-2">
                                                             <hr />
                                                             <div className="col-md-12 col-sm-12 mt-0 mt-md-3">
                                                                 <p style={{ marginBottom: "2px" }}>
-                                                                    Tanggal PO : {formatDate(itempo.tanggal_po)}
+                                                                    Tanggal PO : {formatDate(itemmove.tanggal_po)}
                                                                 </p>
                                                                 <p style={{ marginBottom: "2px" }}>
-                                                                    Kantor Cabang : {itempo.nama_kantor}
+                                                                    Kantor Cabang : {itemmove.nama_kantor}
                                                                 </p>
                                                                 <p style={{ marginBottom: "2px" }}>
-                                                                    Customer : {itempo.customer}
+                                                                    Customer : {itemmove.customer}
                                                                 </p>
                                                                 <p style={{ marginBottom: "2px" }}>
-                                                                    Titik Muat : {itempo.titik_muat}
+                                                                    Titik Muat : {itemmove.titik_muat}
                                                                 </p>
                                                                 <p style={{ marginBottom: "2px" }}>
-                                                                    Titik Bongkar : {itempo.titik_bongkar}
+                                                                    Titik Bongkar : {itemmove.titik_bongkar}
                                                                 </p>
                                                                 <p style={{ marginBottom: "2px" }}>
-                                                                    Jam Standby : {itempo.jam_stand_by} WIB
+                                                                    Jam Standby : {itemmove.jam_stand_by} WIB
                                                                 </p>
                                                                 <p style={{ marginBottom: "2px" }}>
-                                                                    Total Muatan Ayam : {(itempo.jenis_muatan_json.ayam).toLocaleString('de-DE')}
+                                                                    Total Muatan Ayam : {(itemmove.jenis_muatan_json.ayam).toLocaleString('de-DE')}
                                                                 </p>
                                                                 <p style={{ marginBottom: "2px" }}>
-                                                                    Total Muatan Telur : {(itempo.jenis_muatan_json.telur).toLocaleString('de-DE')}
+                                                                    Total Muatan Telur : {(itemmove.jenis_muatan_json.telur).toLocaleString('de-DE')}
                                                                 </p>
                                                                 <p style={{ marginBottom: "2px" }}>
-                                                                    Status PO : {itempo.status_po}
+                                                                    Status PO : {itemmove.status_po}
                                                                 </p>
-                                                                <button className="btn btn-link p-0 mt-3" onClick={() => handlePageChange('detail', itempo.id_po, itempo.id_kantor)}>
+                                                                <button className="btn btn-link p-0 mt-3" onClick={() => handlePageChange('detail', itemmove.id_po, itemmove.id_kantor)}>
                                                                     <i className="tf-icons bx bx-edit me-2"></i> DETAIL
                                                                 </button>
                                                             </div>

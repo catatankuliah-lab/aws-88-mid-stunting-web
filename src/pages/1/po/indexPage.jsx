@@ -26,6 +26,7 @@ const IndexPage = () => {
 
     const [kantorOption, setKantorOption] = useState([]);
     const [selectedKantor, setSelectedKantor] = useState(null);
+    const [selectedKantorInit, setSelectedKantorInit] = useState(null);
 
     const [dataPO, setDataPO] = useState([]);
 
@@ -85,6 +86,7 @@ const IndexPage = () => {
 
     const handleAlokasiChange = (selectedOption) => {
         setSelectedAlokasi(selectedOption);
+        setAlokasiInit(selectedOption.value);
         setFormFilter((prevState) => ({
             ...prevState,
             id_alokasi: selectedOption ? selectedOption.value : null
@@ -122,15 +124,17 @@ const IndexPage = () => {
 
     const handleKantorChange = (selectedOption) => {
         setSelectedKantor(selectedOption);
+        setSelectedKantorInit(selectedOption.value);
         setFormFilter((prevState) => ({
             ...prevState,
             id_kantor: selectedOption ? selectedOption.value : null
         }));
     };
 
-    const handlePageChange = (page, id = null) => {
+    const handlePageChange = (page, id = null, idkantor) => {
         if (id !== null) {
-            setAlokasiInit(id);
+            setAlokasiInit(selectedAlokasi.value);
+            setSelectedKantorInit(idkantor);
             setDetailId(id);
         }
         setCurrentView(page);
@@ -256,6 +260,7 @@ const IndexPage = () => {
                                                             <hr />
                                                             <div className="col-md-12 col-sm-12 mt-0 mt-md-3">
                                                                 <p style={{ marginBottom: "2px" }}>
+<<<<<<< HEAD
                                                                      Tanggal PO : {formatDate(itempo.tanggal_po)}
                                                                 </p>
                                                                 <p style={{ marginBottom: "2px" }}>
@@ -281,8 +286,35 @@ const IndexPage = () => {
                                                                 </p>
                                                                 <p style={{ marginBottom: "2px" }}>
                                                                      Status PO : {itempo.status_po}
+=======
+                                                                    Tanggal PO : {formatDate(itempo.tanggal_po)}
+>>>>>>> b810ec73acaea585847572b5da10bb80ace2422a
                                                                 </p>
-                                                                <button className="btn btn-link p-0 mt-3" onClick={() => handlePageChange('detail', itempo.id_po)}>
+                                                                <p style={{ marginBottom: "2px" }}>
+                                                                    Kantor Cabang : {itempo.nama_kantor}
+                                                                </p>
+                                                                <p style={{ marginBottom: "2px" }}>
+                                                                    Customer : {itempo.customer}
+                                                                </p>
+                                                                <p style={{ marginBottom: "2px" }}>
+                                                                    Titik Muat : {itempo.titik_muat}
+                                                                </p>
+                                                                <p style={{ marginBottom: "2px" }}>
+                                                                    Titik Bongkar : {itempo.titik_bongkar}
+                                                                </p>
+                                                                <p style={{ marginBottom: "2px" }}>
+                                                                    Jam Standby : {itempo.jam_stand_by} WIB
+                                                                </p>
+                                                                <p style={{ marginBottom: "2px" }}>
+                                                                    Total Muatan Ayam : {(itempo.jenis_muatan_json.ayam).toLocaleString('de-DE')}
+                                                                </p>
+                                                                <p style={{ marginBottom: "2px" }}>
+                                                                    Total Muatan Telur : {(itempo.jenis_muatan_json.telur).toLocaleString('de-DE')}
+                                                                </p>
+                                                                <p style={{ marginBottom: "2px" }}>
+                                                                    Status PO : {itempo.status_po}
+                                                                </p>
+                                                                <button className="btn btn-link p-0 mt-3" onClick={() => handlePageChange('detail', itempo.id_po, itempo.id_kantor)}>
                                                                     <i className="tf-icons bx bx-edit me-2"></i> DETAIL
                                                                 </button>
                                                             </div>
@@ -298,7 +330,7 @@ const IndexPage = () => {
                     </div>
                 </>
             )}
-            {currentView === 'detail' && <DetailPage handlePageChange={handlePageChange} detailId={detailId} handleBackClick={handleBackClick} />}
+            {currentView === 'detail' && <DetailPage handlePageChange={handlePageChange} detailId={detailId} alokasiInit={alokasiInit} selectedKantorInit={selectedKantorInit} handleBackClick={handleBackClick} />}
         </div>
     );
 };

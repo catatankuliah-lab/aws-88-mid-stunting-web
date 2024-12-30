@@ -5,13 +5,24 @@ import { Blank } from "./layouts/Blank";
 
 function App() {
   const location = useLocation();
-  const isAuthPath = location.pathname.includes("auth") || location.pathname.includes("error") || location.pathname.includes("under-maintenance") | location.pathname.includes("blank");
+
+  const isAuthPath =
+    location.pathname === "/" ||
+    location.pathname.includes("login") ||
+    location.pathname.includes("auth");
+
+  const isLayoutPath =
+    location.pathname.startsWith("/1") ||
+    location.pathname.startsWith("/2") ||
+    location.pathname.startsWith("/3") ||
+    location.pathname.startsWith("/4");
+
   return (
     <>
-      {isAuthPath ? (
-        <AppRoutes>
-            <Blank/>
-          </AppRoutes>
+      {isAuthPath || !isLayoutPath ? (
+        <Blank>
+          <AppRoutes />
+        </Blank>
       ) : (
         <Layout>
           <AppRoutes />

@@ -260,35 +260,7 @@ const IndexPage = () => {
                                                             <hr />
                                                             <div className="col-md-12 col-sm-12 mt-0 mt-md-3">
                                                                 <p style={{ marginBottom: "2px" }}>
-<<<<<<< HEAD
-                                                                     Tanggal PO : {formatDate(itempo.tanggal_po)}
-                                                                </p>
-                                                                <p style={{ marginBottom: "2px" }}>
-                                                                     Kantor Cabang : {itempo.nama_kantor}
-                                                                </p>
-                                                                <p style={{ marginBottom: "2px" }}>
-                                                                     Customer : {itempo.customer}
-                                                                </p>
-                                                                <p style={{ marginBottom: "2px" }}>
-                                                                     Titik Muat : {itempo.titik_muat}
-                                                                </p>
-                                                                <p style={{ marginBottom: "2px" }}>
-                                                                     Titik Bongkar : {itempo.titik_bongkar}
-                                                                </p>
-                                                                <p style={{ marginBottom: "2px" }}>
-                                                                     Jam Standby : {itempo.jam_stand_by}
-                                                                </p>
-                                                                <p style={{ marginBottom: "2px" }}>
-                                                                     Total Muatan Ayam : {(itempo.jenis_muatan_json.ayam).toLocaleString('de-DE')}
-                                                                </p>
-                                                                <p style={{ marginBottom: "2px" }}>
-                                                                     Total Muatan Telur : {(itempo.jenis_muatan_json.telur).toLocaleString('de-DE')}
-                                                                </p>
-                                                                <p style={{ marginBottom: "2px" }}>
-                                                                     Status PO : {itempo.status_po}
-=======
                                                                     Tanggal PO : {formatDate(itempo.tanggal_po)}
->>>>>>> b810ec73acaea585847572b5da10bb80ace2422a
                                                                 </p>
                                                                 <p style={{ marginBottom: "2px" }}>
                                                                     Kantor Cabang : {itempo.nama_kantor}

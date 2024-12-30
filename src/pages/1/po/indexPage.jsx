@@ -26,6 +26,7 @@ const IndexPage = () => {
 
     const [kantorOption, setKantorOption] = useState([]);
     const [selectedKantor, setSelectedKantor] = useState(null);
+    const [selectedKantorInit, setSelectedKantorInit] = useState(null);
 
     const [dataPO, setDataPO] = useState([]);
 
@@ -123,15 +124,17 @@ const IndexPage = () => {
 
     const handleKantorChange = (selectedOption) => {
         setSelectedKantor(selectedOption);
+        setSelectedKantorInit(selectedOption.value);
         setFormFilter((prevState) => ({
             ...prevState,
             id_kantor: selectedOption ? selectedOption.value : null
         }));
     };
 
-    const handlePageChange = (page, id = null) => {
+    const handlePageChange = (page, id = null, idkantor) => {
         if (id !== null) {
-            setAlokasiInit(id);
+            setAlokasiInit(selectedAlokasi.value);
+            setSelectedKantorInit(idkantor);
             setDetailId(id);
         }
         setCurrentView(page);
@@ -259,7 +262,7 @@ const IndexPage = () => {
                                                                 <p style={{ marginBottom: "2px" }}>
                                                                     Telpon {itempo.telpon_driver}
                                                                 </p>
-                                                                <button className="btn btn-link p-0 mt-3" onClick={() => handlePageChange('detail', itempo.id_po)}>
+                                                                <button className="btn btn-link p-0 mt-3" onClick={() => handlePageChange('detail', itempo.id_po, itempo.id_kantor)}>
                                                                     <i className="tf-icons bx bx-edit me-2"></i> DETAIL
                                                                 </button>
                                                             </div>
@@ -275,7 +278,7 @@ const IndexPage = () => {
                     </div>
                 </>
             )}
-            {currentView === 'detail' && <DetailPage handlePageChange={handlePageChange} detailId={detailId} alokasiInit={alokasiInit} handleBackClick={handleBackClick} />}
+            {currentView === 'detail' && <DetailPage handlePageChange={handlePageChange} detailId={detailId} alokasiInit={alokasiInit} selectedKantorInit={selectedKantorInit} handleBackClick={handleBackClick} />}
         </div>
     );
 };

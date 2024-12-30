@@ -256,7 +256,31 @@ const IndexPage = () => {
                                                             <hr />
                                                             <div className="col-md-12 col-sm-12 mt-0 mt-md-3">
                                                                 <p style={{ marginBottom: "2px" }}>
-                                                                    Telpon {itempo.telpon_driver}
+                                                                     Tanggal PO : {formatDate(itempo.tanggal_po)}
+                                                                </p>
+                                                                <p style={{ marginBottom: "2px" }}>
+                                                                     Kantor Cabang : {itempo.nama_kantor}
+                                                                </p>
+                                                                <p style={{ marginBottom: "2px" }}>
+                                                                     Customer : {itempo.customer}
+                                                                </p>
+                                                                <p style={{ marginBottom: "2px" }}>
+                                                                     Titik Muat : {itempo.titik_muat}
+                                                                </p>
+                                                                <p style={{ marginBottom: "2px" }}>
+                                                                     Titik Bongkar : {itempo.titik_bongkar}
+                                                                </p>
+                                                                <p style={{ marginBottom: "2px" }}>
+                                                                     Jam Standby : {itempo.jam_stand_by}
+                                                                </p>
+                                                                <p style={{ marginBottom: "2px" }}>
+                                                                     Total Muatan Ayam : {(itempo.jenis_muatan_json.ayam).toLocaleString('de-DE')}
+                                                                </p>
+                                                                <p style={{ marginBottom: "2px" }}>
+                                                                     Total Muatan Telur : {(itempo.jenis_muatan_json.telur).toLocaleString('de-DE')}
+                                                                </p>
+                                                                <p style={{ marginBottom: "2px" }}>
+                                                                     Status PO : {itempo.status_po}
                                                                 </p>
                                                                 <button className="btn btn-link p-0 mt-3" onClick={() => handlePageChange('detail', itempo.id_po)}>
                                                                     <i className="tf-icons bx bx-edit me-2"></i> DETAIL

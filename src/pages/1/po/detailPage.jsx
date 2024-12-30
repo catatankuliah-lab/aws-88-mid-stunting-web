@@ -851,14 +851,14 @@ const DetailPage = ({ handlePageChanges, detailId, handleBackClick, alokasiInit,
                 <div className="mb-3">
                     <div className="divider text-start fw-bold">
                         <div className="divider-text">
-                            <span className="menu-header-text fs-6">Detail Loading Order</span>
+                            <span className="menu-header-text fs-6">Detail Purchase Order</span>
                         </div>
                     </div>
                 </div>
             </div>
             <div className="col-lg-12">
                 <div className="">
-                    Klik <button className="fw-bold btn btn-link p-0" onClick={() => handleBackClick()}>disini</button> untuk kembali ke menu utama Loading Order.
+                    Klik <button className="fw-bold btn btn-link p-0" onClick={() => handleBackClick()}>disini</button> untuk kembali ke menu utama Purchase Order.
                 </div>
             </div>
             <div className="col-md-12 mt-3">
@@ -867,18 +867,10 @@ const DetailPage = ({ handlePageChanges, detailId, handleBackClick, alokasiInit,
                         <div className="mb-3">
                             <div className="divider text-start">
                                 <div className="divider-text">
-                                    <span className="menu-header-text fs-6">Informasi Loading Order</span>
+                                    <span className="menu-header-text fs-6">Informasi Purchase Order</span>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="col-md-3 col-sm-12 mb-3">
-                        <label htmlFor="nama_kantor" className="form-label">Kantor Cabang</label>
-                        <input className="form-control" type="text" id="nama_kantor" name='nama_kantor' placeholder="Kantor Cabang" value={nama_kantor} required readOnly />
-                    </div>
-                    <div className="col-md-3 col-sm-12 mb-3">
-                        <label htmlFor="nama_gudang" className="form-label">Gudang Bulog</label>
-                        <input className="form-control" type="text" id="nama_gudang" name='nama_gudang' placeholder="Kantor Cabang" value={nama_gudang} required readOnly />
                     </div>
                     <div className="col-md-3 col-sm-12 col-sm-12 mb-3">
                         <label htmlFor="id_alokasi" className="form-label">Alokasi</label>
@@ -893,19 +885,40 @@ const DetailPage = ({ handlePageChanges, detailId, handleBackClick, alokasiInit,
                         />
                     </div>
                     <div className="col-md-3 col-sm-12 mb-3">
-                        <label htmlFor="nomor_lo" className="form-label">Nomor LO</label>
-                        <input className="form-control" type="text" id="nomor_lo" name='nomor_lo' placeholder="Nomor LO" value={lo?.nomor_lo} onChange={handleChange} required readOnly />
+                        <label htmlFor="nama_gudang" className="form-label">Tanggal PO</label>
+                        <input className="form-control" type="text" id="nama_gudang" name='nama_gudang' placeholder="Kantor Cabang" value={nama_gudang} required readOnly />
+                    </div>
+
+                    <div className="col-md-3 col-sm-12 mb-3">
+                        <label htmlFor="nama_kantor" className="form-label">Nomor PO</label>
+                        <input className="form-control" type="text" id="nama_kantor" name='nama_kantor' placeholder="Kantor Cabang" value={nama_kantor} required readOnly />
+                    </div>
+                    <div className="col-md-3 col-sm-12 col-sm-12 mb-3">
+                        <label htmlFor="id_alokasi" className="form-label">Customer</label>
+                        <Select
+                            id="id_alokasi"
+                            name="id_alokasi"
+                            value={selectedAlokasi}
+                            onChange={handleAlokasiChange}
+                            options={alokasiOption}
+                            placeholder="Pilih Alokasi"
+                            required
+                        />
                     </div>
                     <div className="col-md-3 col-sm-12 mb-3">
-                        <label htmlFor="tanggal_lo" className="form-label">Tanggal LO</label>
+                        <label htmlFor="tanggal_lo" className="form-label">Titik Muat</label>
                         <input className="form-control text-uppercase" type="date" id="tanggal_lo" name='tanggal_lo' ref={inputRef} defaultValue={formattedDate} placeholder="Tanggal Rencana Salur" onChange={handleChange} required />
                     </div>
                     <div className="col-md-3 col-sm-12 mb-3">
-                        <label htmlFor="nomor_so" className="form-label">Nomor SO</label>
+                        <label htmlFor="nomor_so" className="form-label">Titik Bongkar</label>
+                        <input className="form-control" type="text" id="nomor_so" name='nomor_so' placeholder="Lokasi Terakhir" ref={inputRef} defaultValue={lo?.nomor_so || ""} onChange={handleChange} />
+                    </div>
+                    <div className="col-md-3 col-sm-12 mb-3">
+                        <label htmlFor="nomor_so" className="form-label">Jam Stand By</label>
                         <input className="form-control" type="text" id="nomor_so" name='nomor_so' placeholder="Lokasi Terakhir" ref={inputRef} defaultValue={lo?.nomor_so || ""} onChange={handleChange} />
                     </div>
                     <div className="col-md-3 col-sm-12 col-sm-12 mb-3">
-                        <label htmlFor="id_do" className="form-label">Nomor DO</label>
+                        <label htmlFor="id_do" className="form-label">Status PO</label>
                         <Select
                             id="id_do"
                             name="id_do"
@@ -915,44 +928,11 @@ const DetailPage = ({ handlePageChanges, detailId, handleBackClick, alokasiInit,
                             placeholder="Pilih Nomor DO"
                         />
                     </div>
-                    <div className="col-md-3 col-sm-12 mb-3">
-                        <label htmlFor="nama_driver" className="form-label">Nama Driver</label>
-                        <input className="form-control" type="text" id="nama_driver" name='nama_driver' placeholder="Nama Driver" ref={inputRef} defaultValue={lo?.nama_driver || ""} onChange={handleChange} required />
-                    </div>
-                    <div className="col-md-3 col-sm-12 mb-3">
-                        <label htmlFor="telpon_driver" className="form-label">Telpon Driver</label>
-                        <input className="form-control" type="text" id="telpon_driver" name='telpon_driver' placeholder="Telpon Driver" ref={inputRef} defaultValue={lo?.telpon_driver || ""} onChange={handleChange} required />
-                    </div>
-                    <div className="col-md-3 col-sm-12 mb-3">
-                        <label htmlFor="nopol" className="form-label">Nopol Mobil</label>
-                        <input className="form-control" type="text" id="nopol" name='nopol' placeholder="E 88 LOG" ref={inputRef} defaultValue={lo?.nopol || ""} onChange={handleChange} required />
-                    </div>
-                    <div className="col-md-3 col-sm-12 mb-3">
-                        <label htmlFor="pic" className="form-label">Nama PIC</label>
-                        <input className="form-control" type="text" id="pic" name='pic' placeholder="Nama PIC" ref={inputRef} defaultValue={lo?.pic || ""} onChange={handleChange} required />
-                    </div>
-                    <div className="col-md-3 col-sm-12 mb-3">
-                        <label htmlFor="checker" className="form-label">Nama Checker</label>
-                        <input className="form-control" type="text" id="checker" name='checker' placeholder="Nama Checker" ref={inputRef} defaultValue={lo?.checker || ""} onChange={handleChange} required />
-                    </div>
-                    <div className="col-md-3 col-sm-12 mb-3">
-                        <label htmlFor="file_do" className="form-label">File Loading Order</label>
-                        <input className="form-control" type="file" id="file_do" name='file_do' placeholder="File Loading Order" onChange={(e) => handleFileChange(e, setFile)} required />
-                    </div>
                     <div className="col-lg-12 mt-2">
                         <div className="mb-3">
                             <div className="divider text-start">
                                 <div className="divider-text">
-                                    <span className="menu-header-text fs-6">Informasi Item Loading Order</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-lg-12 mt-2">
-                        <div className="mb-3">
-                            <div className="divider text-start">
-                                <div className="divider-text">
-                                    <span className="menu-header-text fs-6">Item Rencana Salur</span>
+                                    <span className="menu-header-text fs-6">Item Purchase Order</span>
                                 </div>
                             </div>
                         </div>
@@ -963,13 +943,13 @@ const DetailPage = ({ handlePageChanges, detailId, handleBackClick, alokasiInit,
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Tanggal</th>
-                                        <th>Provinsi</th>
-                                        <th>Kabupaten/Kota</th>
-                                        <th>Kecamatan</th>
-                                        <th>Desa/Kelurahan</th>
-                                        <th>Jumlah KPM</th>
-                                        <th>Jumlah Kg</th>
+                                        <th>Tanggal PO</th>
+                                        <th>Jenis Mobil</th>
+                                        <th>Nopol Mobil</th>
+                                        <th>Nama Driver</th>
+                                        <th>Nomor Telepon</th>
+                                        <th>Jenis Muatan</th>
+                                        <th>Jumlah Muatan</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -1014,10 +994,6 @@ const DetailPage = ({ handlePageChanges, detailId, handleBackClick, alokasiInit,
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                    <div className="col-md-3 col-sm-12 mb-3 mt-3">
-                        <label htmlFor="" className="form-label">Proses</label>
-                        <button type="button" onClick={downlaodPDFLO} className="btn btn-primary w-100">DOWNLOAD PDF</button>
                     </div>
                 </div>
             </div>

@@ -85,6 +85,7 @@ const IndexPage = () => {
 
     const handleAlokasiChange = (selectedOption) => {
         setSelectedAlokasi(selectedOption);
+        setAlokasiInit(selectedOption.value);
         setFormFilter((prevState) => ({
             ...prevState,
             id_alokasi: selectedOption ? selectedOption.value : null
@@ -274,7 +275,7 @@ const IndexPage = () => {
                     </div>
                 </>
             )}
-            {currentView === 'detail' && <DetailPage handlePageChange={handlePageChange} detailId={detailId} handleBackClick={handleBackClick} />}
+            {currentView === 'detail' && <DetailPage handlePageChange={handlePageChange} detailId={detailId} alokasiInit={alokasiInit} handleBackClick={handleBackClick} />}
         </div>
     );
 };

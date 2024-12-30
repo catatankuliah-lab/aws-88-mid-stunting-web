@@ -197,7 +197,7 @@ const IndexPage = () => {
                             <div className="mb-3">
                                 <div className="divider text-start fw-bold">
                                     <div className="divider-text">
-                                        <span className="menu-header-text fs-6">Data Purchase Order</span>
+                                        <span className="menu-header-text fs-6">Data Move</span>
                                     </div>
                                 </div>
                             </div>
@@ -251,7 +251,7 @@ const IndexPage = () => {
                                                         aria-expanded="false"
                                                         aria-controls={`accordion${itemmove.id_po}`}
                                                     >
-                                                        <span className='text-primary fw-bold' >{formatDate(itemmove.tanggal_po)} | {itemmove.nomor_po}</span>
+                                                        <span className='text-primary fw-bold' >{formatDate(itemmove.tanggal_po)} | {itemmove.nomor_move}</span>
                                                     </button>
                                                 </h2>
                                                 <div id={`accordion${itemmove.id_po}`} className="accordion-collapse collapse" data-bs-parent="#accordion_po">
@@ -278,13 +278,10 @@ const IndexPage = () => {
                                                                     Jam Standby : {itemmove.jam_stand_by} WIB
                                                                 </p>
                                                                 <p style={{ marginBottom: "2px" }}>
-                                                                    Total Muatan Ayam : {(itemmove.jenis_muatan_json.ayam).toLocaleString('de-DE')}
+                                                                    Total Muatan Ayam : {itemmove.jumlah_muatan}
                                                                 </p>
                                                                 <p style={{ marginBottom: "2px" }}>
-                                                                    Total Muatan Telur : {(itemmove.jenis_muatan_json.telur).toLocaleString('de-DE')}
-                                                                </p>
-                                                                <p style={{ marginBottom: "2px" }}>
-                                                                    Status PO : {itemmove.status_po}
+                                                                    Status PO : {itemmove.status_move}
                                                                 </p>
                                                                 <button className="btn btn-link p-0 mt-3" onClick={() => handlePageChange('detail', itemmove.id_po, itemmove.id_kantor)}>
                                                                     <i className="tf-icons bx bx-edit me-2"></i> DETAIL

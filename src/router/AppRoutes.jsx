@@ -8,10 +8,7 @@ import Role1PO from "../pages/1/po/indexPage";
 import Role1Move from "../pages/1/move/indexPage";
 import Role1LO from "../pages/1/losjt/indexPage";
 
-import Role2RencanaSalur from "../pages/2/rencanasalur/indexPage";
-import Role2DTTUndangan from "../pages/2/dtt/indexPage";
-import Role2DO from "../pages/2/do/indexPage";
-import Role2LO from "../pages/2/lo/indexPage";
+import Role2PO from "../pages/2/po/indexPage";
 
 
 import Role3DO from "../pages/3/do/indexPage";
@@ -37,10 +34,7 @@ const AppRoutes = () => {
             {id_role == '2' && (
                 <>
                     <Route path="/2/dashboard" element={<DashboardPage />} />
-                    <Route path="/2/rencanasalur" element={<Role2RencanaSalur />} />
-                    <Route path="/2/dttundangan" element={<Role2DTTUndangan />} />
-                    <Route path="/2/dockout" element={<Role2DO />} />
-                    <Route path="/2/losjt" element={<Role2LO />} />
+                    <Route path="/2/po" element={<Role2PO />} />
                 </>
             )}
             {id_role == '3' && (

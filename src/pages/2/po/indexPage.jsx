@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import DetailPage from './detailPage';
+import DetailPage from './DetailPage';
+import AddPage from './addPage';
 import Select from 'react-select';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
@@ -90,10 +91,9 @@ const IndexPage = () => {
         }));
     };
 
-    const handlePageChange = (page, id = null, idkantor) => {
+    const handlePageChange = (page, id = null) => {
         if (id !== null) {
-            setAlokasiInit(selectedAlokasi.value);
-            setSelectedKantorInit(idkantor);
+            setAlokasiInit(1);
             setDetailId(id);
         }
         setCurrentView(page);
@@ -152,13 +152,16 @@ const IndexPage = () => {
             {currentView === 'index' && (
                 <>
                     <div className="row">
-                        <div className="col-lg-12 mb-3">
-                            <div className="mb-3">
-                                <div className="divider text-start fw-bold">
-                                    <div className="divider-text">
-                                        <span className="menu-header-text fs-6">Data Purchase Order</span>
-                                    </div>
+                        <div className="col-lg-12">
+                            <div className="divider text-start fw-bold">
+                                <div className="divider-text">
+                                    <span className="menu-header-text fs-6">Data Purchase Order</span>
                                 </div>
+                            </div>
+                        </div>
+                        <div className="col-lg-12 mb-3">
+                            <div className="">
+                                Klik <button className="fw-bold btn btn-link p-0" onClick={() => handlePageChange('add')}>disini</button> untuk menambahkan Purchase Order.
                             </div>
                         </div>
                         <div className="col-md-3 col-sm-12 col-sm-12 mb-3">
@@ -179,17 +182,6 @@ const IndexPage = () => {
                         <div className="col-md-3 col-sm-12 mb-3">
                             <label htmlFor="tanggal_akhir" className="form-label">Tanggal Akhir</label>
                             <input className="form-control text-uppercase" type="date" id="tanggal_akhir" name='tanggal_akhir' onChange={handleChange} />
-                        </div>
-                        <div className="col-md-3 col-sm-12 col-sm-12 mb-3">
-                            <label htmlFor="id_kantor" className="form-label">Kantor</label>
-                            <Select
-                                id="id_kantor"
-                                name="id_kantor"
-                                value={selectedKantor}
-                                onChange={handleKantorChange}
-                                options={kantorOption}
-                                placeholder="Pilih Kantor"
-                            />
                         </div>
                         <div className="col-md-3 col-sm-12 mb-3">
                             <label htmlFor="" className="form-label">Tampilkan</label>
@@ -261,7 +253,8 @@ const IndexPage = () => {
                     </div>
                 </>
             )}
-            {currentView === 'detail' && <DetailPage handlePageChange={handlePageChange} detailId={detailId} alokasiInit={alokasiInit} selectedKantorInit={selectedKantorInit} handleBackClick={handleBackClick} />}
+            {currentView === 'add' && <AddPage handlePageChange={handlePageChange} handleBackClick={handleBackClick} />}
+            {currentView === 'detail' && <DetailPage handlePageChange={handlePageChange} detailId={detailId} alokasiInit={alokasiInit} handleBackClick={handleBackClick} />}
         </div>
     );
 };

@@ -175,6 +175,7 @@ const IndexPage = () => {
                     Authorization: token,
                 }
             });
+            console.log(response.data.data);
             if (response.data.data) {
                 const data = Array.isArray(response.data.data) ? response.data.data : [response.data.data];
                 setdataMove(data);
@@ -278,10 +279,10 @@ const IndexPage = () => {
                                                                     Jam Standby : {itemmove.jam_stand_by} WIB
                                                                 </p>
                                                                 <p style={{ marginBottom: "2px" }}>
-                                                                    Total Muatan Ayam : {(itemmove.jenis_muatan_json.AYAM).toLocaleString('de-DE')}
+                                                                    Jenis Muatan : {itemmove.jenis_muatan}
                                                                 </p>
                                                                 <p style={{ marginBottom: "2px" }}>
-                                                                    Total Muatan Telur : {(itemmove.jenis_muatan_json.TELUR).toLocaleString('de-DE')}
+                                                                    Jumlah Muatan : {itemmove.jumlah_muatan} KG
                                                                 </p>
                                                                 <p style={{ marginBottom: "2px" }}>
                                                                     Status MOVE : {itemmove.status_move}

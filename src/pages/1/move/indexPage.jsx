@@ -197,7 +197,7 @@ const IndexPage = () => {
                             <div className="mb-3">
                                 <div className="divider text-start fw-bold">
                                     <div className="divider-text">
-                                        <span className="menu-header-text fs-6">Data Purchase Order</span>
+                                        <span className="menu-header-text fs-6">Data Move</span>
                                     </div>
                                 </div>
                             </div>
@@ -241,26 +241,26 @@ const IndexPage = () => {
                                 <div className="col-md-12 mb-4 mb-md-0">
                                     <div className="accordion mt-3" id="accordion_po">
                                         {dataMove.map(itemmove => (
-                                            <div key={itemmove.id_po} className="card accordion-item">
-                                                <h2 className="accordion-header px-2" id={`heading${itemmove.id_po}`}>
+                                            <div key={itemmove.id_move} className="card accordion-item">
+                                                <h2 className="accordion-header px-2" id={`heading${itemmove.id_move}`}>
                                                     <button
                                                         type="button"
                                                         className={`accordion-button accordion-button-primary collapsed`}
                                                         data-bs-toggle="collapse"
-                                                        data-bs-target={`#accordion${itemmove.id_po}`}
+                                                        data-bs-target={`#accordion${itemmove.id_move}`}
                                                         aria-expanded="false"
-                                                        aria-controls={`accordion${itemmove.id_po}`}
+                                                        aria-controls={`accordion${itemmove.id_move}`}
                                                     >
-                                                        <span className='text-primary fw-bold' >{formatDate(itemmove.tanggal_po)} | {itemmove.nomor_po}</span>
+                                                        <span className='text-primary fw-bold' >{formatDate(itemmove.tanggal_move)} | {itemmove.nomor_move}</span>
                                                     </button>
                                                 </h2>
-                                                <div id={`accordion${itemmove.id_po}`} className="accordion-collapse collapse" data-bs-parent="#accordion_po">
+                                                <div id={`accordion${itemmove.id_move}`} className="accordion-collapse collapse" data-bs-parent="#accordion_po">
                                                     <div className="accordion-body" style={{ marginTop: "-15px" }} >
                                                         <div className="px-2">
                                                             <hr />
                                                             <div className="col-md-12 col-sm-12 mt-0 mt-md-3">
                                                                 <p style={{ marginBottom: "2px" }}>
-                                                                    Tanggal PO : {formatDate(itemmove.tanggal_po)}
+                                                                    Tanggal Move : {formatDate(itemmove.tanggal_move)}
                                                                 </p>
                                                                 <p style={{ marginBottom: "2px" }}>
                                                                     Kantor Cabang : {itemmove.nama_kantor}
@@ -278,15 +278,15 @@ const IndexPage = () => {
                                                                     Jam Standby : {itemmove.jam_stand_by} WIB
                                                                 </p>
                                                                 <p style={{ marginBottom: "2px" }}>
-                                                                    Total Muatan Ayam : {(itemmove.jenis_muatan_json.ayam).toLocaleString('de-DE')}
+                                                                    Total Muatan Ayam : {(itemmove.jenis_muatan_json.AYAM).toLocaleString('de-DE')}
                                                                 </p>
                                                                 <p style={{ marginBottom: "2px" }}>
-                                                                    Total Muatan Telur : {(itemmove.jenis_muatan_json.telur).toLocaleString('de-DE')}
+                                                                    Total Muatan Telur : {(itemmove.jenis_muatan_json.TELUR).toLocaleString('de-DE')}
                                                                 </p>
                                                                 <p style={{ marginBottom: "2px" }}>
-                                                                    Status PO : {itemmove.status_po}
+                                                                    Status MOVE : {itemmove.status_move}
                                                                 </p>
-                                                                <button className="btn btn-link p-0 mt-3" onClick={() => handlePageChange('detail', itemmove.id_po, itemmove.id_kantor)}>
+                                                                <button className="btn btn-link p-0 mt-3" onClick={() => handlePageChange('detail', itemmove.id_move, itemmove.id_kantor)}>
                                                                     <i className="tf-icons bx bx-edit me-2"></i> DETAIL
                                                                 </button>
                                                             </div>

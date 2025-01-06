@@ -5,85 +5,76 @@ import Select from 'react-select';
 
 const DetailPage = ({ detailId, alokasiInit, handleBackClick }) => {
 
-    console.clear();
-
     const token = localStorage.getItem('token');
 
     const inputRef = useRef(null);
 
     const [alokasiOption, setAlokasiOption] = useState([]);
     const [selectedAlokasi, setSelectedAlokasi] = useState(null);
-    const [po, setPO] = useState([]);
-    const [itemPO, setItemPO] = useState([]);
+    const [lo, setLO] = useState([]);
+    const [itemLO, setItemLO] = useState([]);
 
-    const [formDataPO, setFormDataPO] = useState({
-        "id_alokasi": "",
-        "id_kantor": "",
-        "nomor_po": "",
-        "tanggal_po": "",
-        "customer": "",
-        "titik_muat": "",
-        "titik_bongkar": "",
-        "jam_stand_by": "",
-        "status_po": ""
-    });
-
-    const fetchPO = async () => {
+    const fetchLO = async () => {
         if (!token) {
             navigate('/');
         }
         try {
-            const response = await axios.get(`http://localhost:3089/api/v1/po/${detailId}`, {
+            const response = await axios.get(`http://localhost:3089/api/v1/lo/${detailId}`, {
                 headers: {
                     Authorization: token
                 }
             });
-            setPO(response.data.data);
+            setLO(response.data.data);
         } catch (error) {
             console.log(error);
-            setPO([]);
+            setLO([]);
         }
     };
 
     useEffect(() => {
-        fetchPO();
+        fetchLO();
     }, [token, detailId]);
 
-    const fetchItemPO = async () => {
+    const fetchItemLO = async () => {
         if (!token) {
             navigate('/');
         }
         try {
-            const response = await axios.get(`http://localhost:3089/api/v1/itempo/po/${detailId}`, {
+            const response = await axios.get(`http://localhost:3089/api/v1/itemlo/lo/${detailId}`, {
                 headers: {
                     Authorization: token
                 }
             });
             if (response.data.data.length !== 0) {
                 const datafetch = response.data.data.map(dataitem => ({
-                    nomor_po: dataitem.nomor_po,
-                    tanggal_po: dataitem.tanggal_po,
+                    nomor_lo: dataitem.nomor_lo,
+                    tanggal_lo: dataitem.tanggal_lo,
                     id_item_po: dataitem.id_item_po,
                     id_po: dataitem.id_po,
                     jenis_mobil: dataitem.jenis_mobil,
                     nopol_mobil: dataitem.nopol_mobil,
                     nama_driver: dataitem.nama_driver,
                     telpon_driver: dataitem.telpon_driver,
-                    jenis_muatan: dataitem.jenis_muatan,
-                    jumlah_muatan: dataitem.jumlah_muatan
+                    jumlah_muatan_ayam: dataitem.jumlah_muatan_ayam,
+                    jumlah_muatan_telur: dataitem.jumlah_muatan_telur,
+                    titik_bongkar: dataitem.titik_bongkar,
+                    nama_provinsi: dataitem.nama_provinsi,
+                    nama_kabupaten_kota: dataitem.nama_kabupaten_kota,
+                    nama_kecamatan: dataitem.nama_kecamatan,
+                    nama_desa_kelurahan: dataitem.nama_desa_kelurahan
                 }));
-                setItemPO(datafetch);
+                setItemLO(datafetch);
             } else {
-                setItemPO([]);
+                setItemLO([]);
             }
         } catch (error) {
             console.log(error);
-            setItemPO([]);
+            setItemLO([]);
         }
     };
 
     useEffect(() => {
-        fetchItemPO();
+        fetchItemLO();
     }, [token, detailId]);
 
     useEffect(() => {
@@ -133,15 +124,34 @@ const DetailPage = ({ detailId, alokasiInit, handleBackClick }) => {
         return `${day}/${month}/${year}`;
     };
 
-    const formattedDate = po?.tanggal_po ? new Date(po.tanggal_po).toISOString().split("T")[0] : "";
+    const formattedDate = lo?.tanggal_lo ? new Date(lo.tanggal_lo).toISOString().split("T")[0] : "";
 
-    const totalByJenisMuatan = itemPO.reduce((acc, item) => {
-        if (!acc[item.jenis_muatan]) {
-            acc[item.jenis_muatan] = 0;
+    // Mengelompokkan data berdasarkan titik bongkar
+    const groupedData = itemLO.reduce((acc, item) => {
+        if (!acc[item.titik_bongkar]) {
+            acc[item.titik_bongkar] = {
+                items: [],
+                totalAyam: 0,
+                totalTelur: 0,
+            };
         }
-        acc[item.jenis_muatan] += item.jumlah_muatan;
+        acc[item.titik_bongkar].items.push(item);
+        acc[item.titik_bongkar].totalAyam += item.jumlah_muatan_ayam;
+        acc[item.titik_bongkar].totalTelur += item.jumlah_muatan_telur;
+
         return acc;
     }, {});
+
+    // Menghitung total keseluruhan
+    const totalKeseluruhan = itemLO.reduce(
+        (acc, item) => {
+            acc.totalAyam += item.jumlah_muatan_ayam;
+            acc.totalTelur += item.jumlah_muatan_telur;
+            return acc;
+        },
+        { totalAyam: 0, totalTelur: 0 }
+    );
+
 
     return (
         <div className="row">
@@ -149,14 +159,14 @@ const DetailPage = ({ detailId, alokasiInit, handleBackClick }) => {
                 <div className="mb-3">
                     <div className="divider text-start fw-bold">
                         <div className="divider-text">
-                            <span className="menu-header-text fs-6">Detail Purchase Order</span>
+                            <span className="menu-header-text fs-6">Detail Loading Order</span>
                         </div>
                     </div>
                 </div>
             </div>
             <div className="col-lg-12 mb-3">
                 <div className="">
-                    Klik <button className="fw-bold btn btn-link p-0" onClick={() => handleBackClick()}>disini</button> untuk kembali ke menu utama Purchase Order.
+                    Klik <button className="fw-bold btn btn-link p-0" onClick={() => handleBackClick()}>disini</button> untuk kembali ke menu utama Loading Order.
                 </div>
             </div>
             <div className="col-md-12">
@@ -164,7 +174,7 @@ const DetailPage = ({ detailId, alokasiInit, handleBackClick }) => {
                     <div className="col-lg-12">
                         <div className="divider text-start">
                             <div className="divider-text">
-                                <span className="menu-header-text fs-6">Informasi Purchase Order</span>
+                                <span className="menu-header-text fs-6">Informasi Loading Order</span>
                             </div>
                         </div>
                     </div>
@@ -181,38 +191,42 @@ const DetailPage = ({ detailId, alokasiInit, handleBackClick }) => {
                         />
                     </div>
                     <div className="col-md-3 col-sm-12 mb-3">
-                        <label htmlFor="nomor_po" className="form-label">Nomor PO</label>
-                        <input className="form-control" type="text" id="nomor_po" name='nomor_po' placeholder="Nomor PO" value={po?.nomor_po} required readOnly />
+                        <label htmlFor="nomor_lo" className="form-label">Nomor LO</label>
+                        <input className="form-control" type="text" id="nomor_lo" name='nomor_lo' placeholder="Nomor PO" value={lo?.nomor_lo} required readOnly />
                     </div>
                     <div className="col-md-3 col-sm-12 mb-3">
-                        <label htmlFor="tanggal_po" className="form-label">Tanggal PO</label>
-                        <input className="form-control text-uppercase" type="date" id="tanggal_po" name='tanggal_po' ref={inputRef} defaultValue={formattedDate} placeholder="Tanggal Rencana Salur" required readOnly />
-                    </div>
-                    <div className="col-md-3 col-sm-12 mb-3">
-                        <label htmlFor="customer" className="form-label">Customer</label>
-                        <input className="form-control" type="text" id="customer" name='customer' placeholder="Nomor PO" value={po?.customer} required readOnly />
+                        <label htmlFor="tanggal_lo" className="form-label">Tanggal LO</label>
+                        <input className="form-control text-uppercase" type="date" id="tanggal_lo" name='tanggal_lo' ref={inputRef} defaultValue={formattedDate} placeholder="" required readOnly />
                     </div>
                     <div className="col-md-3 col-sm-12 mb-3">
                         <label htmlFor="titik_muat" className="form-label">Titik Muat</label>
-                        <input className="form-control" type="text" id="titik_muat" name='titik_muat' placeholder="Nomor PO" value={po?.titik_muat} required readOnly />
+                        <input className="form-control" type="text" id="titik_muat" name='titik_muat' placeholder="Titik Muat" value={lo?.lo_titik_muat} required readOnly />
                     </div>
                     <div className="col-md-3 col-sm-12 mb-3">
-                        <label htmlFor="titik_bongkar" className="form-label">Titik Bongkar</label>
-                        <input className="form-control" type="text" id="titik_bongkar" name='titik_bongkar' placeholder="Nomor PO" value={po?.titik_bongkar} required readOnly />
+                        <label htmlFor="jenis_mobil" className="form-label">Jenis Mobil</label>
+                        <input className="form-control" type="text" id="jenis_mobil" name='jenis_mobil' placeholder="Jenis Mobil" value={lo?.jenis_mobil} required readOnly />
                     </div>
                     <div className="col-md-3 col-sm-12 mb-3">
-                        <label htmlFor="jam_stand_by" className="form-label">Jam Standby</label>
-                        <input className="form-control" type="text" id="jam_stand_by" name='jam_stand_by' placeholder="00:00" value={`${po?.jam_stand_by} WIB`} required readOnly />
+                        <label htmlFor="nopol_mobil" className="form-label">Nopol Mobil</label>
+                        <input className="form-control" type="text" id="nopol_mobil" name='nopol_mobil' placeholder="Nopol Mobil" value={lo?.nopol_mobil} required readOnly />
                     </div>
                     <div className="col-md-3 col-sm-12 mb-3">
-                        <label htmlFor="status_po" className="form-label">Status</label>
-                        <input className="form-control" type="text" id="status_po" name='status_po' placeholder="Nomor PO" value={po?.status_po} required readOnly />
+                        <label htmlFor="nama_driver" className="form-label">Nama Driver</label>
+                        <input className="form-control" type="text" id="nama_driver" name='nama_driver' placeholder="Nama Driver" value={`${lo?.nama_driver}`} required readOnly />
+                    </div>
+                    <div className="col-md-3 col-sm-12 mb-3">
+                        <label htmlFor="telpon_driver" className="form-label">Telpon Driver</label>
+                        <input className="form-control" type="text" id="telpon_driver" name='telpon_driver' placeholder="Telpon Driver" value={lo?.telpon_driver} required readOnly />
+                    </div>
+                    <div className="col-md-3 col-sm-12 mb-3">
+                        <label htmlFor="status_lo" className="form-label">Status LO</label>
+                        <input className="form-control" type="text" id="status_lo" name='status_lo' placeholder="Telpon Driver" value={lo?.status_lo} required readOnly />
                     </div>
                     <div className="col-lg-12 mt-2">
                         <div className="mb-3">
                             <div className="divider text-start">
                                 <div className="divider-text">
-                                    <span className="menu-header-text fs-6">Informasi Item Purchase Order</span>
+                                    <span className="menu-header-text fs-6">Informasi Item Loading Order</span>
                                 </div>
                             </div>
                         </div>
@@ -223,55 +237,57 @@ const DetailPage = ({ detailId, alokasiInit, handleBackClick }) => {
                                 <thead>
                                     <tr>
                                         <th className='fw-bold' >No</th>
-                                        <th className='fw-bold'>Nomor PO</th>
-                                        <th className='fw-bold'>Tanggal PO</th>
-                                        <th className='fw-bold'>Jenis Mobil</th>
-                                        <th className='fw-bold'>Nopol Mobil</th>
-                                        <th className='fw-bold'>Nama Driver</th>
-                                        <th className='fw-bold'>Telpon Driver</th>
-                                        <th className='fw-bold'>Jenis Muatan</th>
-                                        <th className='fw-bold'>Jumlah</th>
+                                        <th className='fw-bold'>Titik Bagi</th>
+                                        <th className='fw-bold'>Provinsi</th>
+                                        <th className='fw-bold'>Kabupaten/Kota</th>
+                                        <th className='fw-bold'>Kecamatan</th>
+                                        <th className='fw-bold'>Desa/Kelurahan</th>
+                                        <th className='fw-bold'>Muatan Ayam</th>
+                                        <th className='fw-bold'>Muatan Telur</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {itemPO.length > 0 ? (
-                                        itemPO.map((item, index) => (
-                                            <tr key={index}>
-                                                <td>{index + 1}</td>
-                                                <td>{item.nomor_po}</td>
-                                                <td>{formatDate(item.tanggal_po)}</td>
-                                                <td>{item.jenis_mobil}</td>
-                                                <td>{item.nopol_mobil}</td>
-                                                <td>{item.nama_driver}</td>
-                                                <td>{item.telpon_driver}</td>
-                                                <td>{item.jenis_muatan}</td>
-                                                <td>{item.jumlah_muatan.toLocaleString('id-ID')}</td>
+                                    {/* Render data per titik bongkar */}
+                                    {Object.entries(groupedData).map(([titik_bongkar, group], groupIndex) => (
+                                        <React.Fragment key={groupIndex}>
+                                            {/* Render data untuk tiap item di titik bongkar */}
+                                            {group.items.map((item, index) => (
+                                                <tr key={index}>
+                                                    <td>{index + 1}</td>
+                                                    <td>{item.titik_bongkar}</td>
+                                                    <td>{item.nama_provinsi}</td>
+                                                    <td>{item.nama_kabupaten_kota}</td>
+                                                    <td>{item.nama_kecamatan}</td>
+                                                    <td>{item.nama_desa_kelurahan}</td>
+                                                    <td>{item.jumlah_muatan_ayam.toLocaleString('id-ID')}</td>
+                                                    <td>{item.jumlah_muatan_telur.toLocaleString('id-ID')}</td>
+                                                </tr>
+                                            ))}
+
+                                            {/* Render total per titik bongkar */}
+                                            <tr>
+                                                <td colSpan="6" className="fw-bold">Total di {titik_bongkar}</td>
+                                                <td className="fw-bold">{group.totalAyam.toLocaleString('id-ID')}</td>
+                                                <td className="fw-bold">{group.totalTelur.toLocaleString('id-ID')}</td>
                                             </tr>
-                                        ))
-                                    ) : (
+                                        </React.Fragment>
+                                    ))}
+
+                                    {/* Jika tidak ada data */}
+                                    {itemLO.length === 0 && (
                                         <tr>
-                                            <td colSpan="9" className="text-center">Data tidak tersedia</td>
+                                            <td colSpan="8" className="text-center">Data tidak tersedia</td>
                                         </tr>
                                     )}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    {/* Menampilkan total per jenis muatan */}
-                    <div className="col-md-12">
-                        <div className="table-responsive text-nowrap">
-                            <table className="table" style={{ fontSize: "13px" }}>
-                                <thead style={{ fontWeight: "bold" }}>
-                                    <tr>
-                                        <th className='fw-bold'>Total Muatan</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {Object.keys(totalByJenisMuatan).map((jenis, index) => (
-                                        <tr key={index}>
-                                            <td>{jenis} <span >{totalByJenisMuatan[jenis].toLocaleString('id-ID')}</span></td>
+
+                                    {/* Render total keseluruhan */}
+                                    {itemLO.length > 0 && (
+                                        <tr className="table-secondary">
+                                            <td colSpan="6" className="fw-bold">Total Keseluruhan</td>
+                                            <td className="fw-bold">{totalKeseluruhan.totalAyam.toLocaleString('id-ID')}</td>
+                                            <td className="fw-bold">{totalKeseluruhan.totalTelur.toLocaleString('id-ID')}</td>
                                         </tr>
-                                    ))}
+                                    )}
                                 </tbody>
                             </table>
                         </div>

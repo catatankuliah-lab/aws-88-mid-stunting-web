@@ -230,6 +230,7 @@ const IndexPage = () => {
                                 onChange={handleKantorChange}
                                 options={kantorOption}
                                 placeholder="Pilih Kantor"
+                                isClearable
                             />
                         </div>
                         <div className="col-md-3 col-sm-12 mb-3">

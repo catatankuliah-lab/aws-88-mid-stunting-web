@@ -28,7 +28,7 @@ const IndexPage = () => {
     const [selectedKantor, setSelectedKantor] = useState(null);
     const [selectedKantorInit, setSelectedKantorInit] = useState(null);
 
-    const [dataPO, setDataPO] = useState([]);
+    const [dataLO, setDataLO] = useState([]);
 
 
     const [formFilter, setFormFilter] = useState({
@@ -152,7 +152,7 @@ const IndexPage = () => {
         return `${day}/${month}/${year}`;
     };
 
-    const getPO = async () => {
+    const getLO = async () => {
         if (!selectedAlokasi) {
             Swal.fire({
                 title: 'Filter Data',
@@ -170,20 +170,20 @@ const IndexPage = () => {
         }
         try {
             const queryParams = new URLSearchParams(formFilter).toString();
-            const response = await axios.get(`http://localhost:3089/api/v1/po/filter?${queryParams}`, {
+            const response = await axios.get(`http://localhost:3089/api/v1/lo/filter?${queryParams}`, {
                 headers: {
                     Authorization: token,
                 }
             });
             if (response.data.data) {
                 const data = Array.isArray(response.data.data) ? response.data.data : [response.data.data];
-                setDataPO(data);
+                setDataLO(data);
             } else {
-                setDataPO([]);
+                setDataLO([]);
                 console.log('No data found for the filters');
             }
         } catch (error) {
-            setDataPO([]);
+            setDataLO([]);
             console.error('Error fetching PO data:', error);
         }
     };
@@ -197,7 +197,7 @@ const IndexPage = () => {
                             <div className="mb-3">
                                 <div className="divider text-start fw-bold">
                                     <div className="divider-text">
-                                        <span className="menu-header-text fs-6">Data Purchase Order</span>
+                                        <span className="menu-header-text fs-6">Data Loading Order</span>
                                     </div>
                                 </div>
                             </div>
@@ -234,59 +234,62 @@ const IndexPage = () => {
                         </div>
                         <div className="col-md-3 col-sm-12 mb-3">
                             <label htmlFor="" className="form-label">Tampilkan</label>
-                            <button type="button" onClick={getPO} className="btn btn-primary w-100">TAMPILKAN</button>
+                            <button type="button" onClick={getLO} className="btn btn-primary w-100">TAMPILKAN</button>
                         </div>
                         <div className="col-lg-12 mt-3">
                             <div className="row">
                                 <div className="col-md-12 mb-4 mb-md-0">
                                     <div className="accordion mt-3" id="accordion_po">
-                                        {dataPO.map(itempo => (
-                                            <div key={itempo.id_po} className="card accordion-item">
-                                                <h2 className="accordion-header px-2" id={`heading${itempo.id_po}`}>
+                                        {dataLO.map(itemlo => (
+                                            <div key={itemlo.id_lo} className="card accordion-item">
+                                                <h2 className="accordion-header px-2" id={`heading${itemlo.id_lo}`}>
                                                     <button
                                                         type="button"
                                                         className={`accordion-button accordion-button-primary collapsed`}
                                                         data-bs-toggle="collapse"
-                                                        data-bs-target={`#accordion${itempo.id_po}`}
+                                                        data-bs-target={`#accordion${itemlo.id_lo}`}
                                                         aria-expanded="false"
-                                                        aria-controls={`accordion${itempo.id_po}`}
+                                                        aria-controls={`accordion${itemlo.id_lo}`}
                                                     >
-                                                        <span className='text-primary fw-bold' >{formatDate(itempo.tanggal_po)} | {itempo.nomor_po}</span>
+                                                        <span className={`fw-bold ${itemlo.status_lo == "SUDAH UPLOAD" ? "text-success" : "text-primary"}`} >{formatDate(itemlo.tanggal_lo)} | {itemlo.nomor_lo}</span>
                                                     </button>
                                                 </h2>
-                                                <div id={`accordion${itempo.id_po}`} className="accordion-collapse collapse" data-bs-parent="#accordion_po">
+                                                <div id={`accordion${itemlo.id_lo}`} className="accordion-collapse collapse" data-bs-parent="#accordion_po">
                                                     <div className="accordion-body" style={{ marginTop: "-15px" }} >
                                                         <div className="px-2">
                                                             <hr />
                                                             <div className="col-md-12 col-sm-12 mt-0 mt-md-3">
                                                                 <p style={{ marginBottom: "2px" }}>
-                                                                    Tanggal PO : {formatDate(itempo.tanggal_po)}
+                                                                    Tanggal PO : {formatDate(itemlo.tanggal_lo)}
                                                                 </p>
                                                                 <p style={{ marginBottom: "2px" }}>
-                                                                    Kantor Cabang : {itempo.nama_kantor}
+                                                                    Kantor Cabang : {itemlo.nama_kantor}
                                                                 </p>
                                                                 <p style={{ marginBottom: "2px" }}>
-                                                                    Customer : {itempo.customer}
+                                                                    Titik Muat : {itemlo.titik_muat}
                                                                 </p>
                                                                 <p style={{ marginBottom: "2px" }}>
-                                                                    Titik Muat : {itempo.titik_muat}
+                                                                    Jenis Mobil : {itemlo.jenis_mobil}
                                                                 </p>
                                                                 <p style={{ marginBottom: "2px" }}>
-                                                                    Titik Bongkar : {itempo.titik_bongkar}
+                                                                    Nopol Mobil : {itemlo.nopol_mobil}
                                                                 </p>
                                                                 <p style={{ marginBottom: "2px" }}>
-                                                                    Jam Standby : {itempo.jam_stand_by} WIB
+                                                                    Nama Driver : {itemlo.nama_driver}
                                                                 </p>
                                                                 <p style={{ marginBottom: "2px" }}>
-                                                                    Total Muatan Ayam : {(itempo.jenis_muatan_json.ayam).toLocaleString('de-DE')}
+                                                                    Telpon Driver : {itemlo.telpon_driver}
                                                                 </p>
                                                                 <p style={{ marginBottom: "2px" }}>
-                                                                    Total Muatan Telur : {(itempo.jenis_muatan_json.telur).toLocaleString('de-DE')}
+                                                                    Total Muatan Ayam : {(itemlo.jenis_muatan_json.ayam).toLocaleString('de-DE')}
                                                                 </p>
                                                                 <p style={{ marginBottom: "2px" }}>
-                                                                    Status PO : {itempo.status_po}
+                                                                    Total Muatan Telur : {(itemlo.jenis_muatan_json.telur).toLocaleString('de-DE')}
                                                                 </p>
-                                                                <button className="btn btn-link p-0 mt-3" onClick={() => handlePageChange('detail', itempo.id_po, itempo.id_kantor)}>
+                                                                <p style={{ marginBottom: "2px" }}>
+                                                                    Status LO : {itemlo.status_lo}
+                                                                </p>
+                                                                <button className="btn btn-link p-0 mt-3" onClick={() => handlePageChange('detail', itemlo.id_lo, itemlo.id_kantor)}>
                                                                     <i className="tf-icons bx bx-edit me-2"></i> DETAIL
                                                                 </button>
                                                             </div>

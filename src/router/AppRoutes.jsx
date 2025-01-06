@@ -6,6 +6,7 @@ import LoginPage from "../pages/auth/LoginPage";
 
 import Role1PO from "../pages/1/po/indexPage";
 import Role1Move from "../pages/1/move/indexPage";
+import Role1LO from "../pages/1/losjt/indexPage";
 
 import Role2RencanaSalur from "../pages/2/rencanasalur/indexPage";
 import Role2DTTUndangan from "../pages/2/dtt/indexPage";
@@ -30,6 +31,7 @@ const AppRoutes = () => {
                     <Route path="/1/dashboard" element={<DashboardPage />} />
                     <Route path="/1/po" element={<Role1PO />} />
                     <Route path="/1/move" element={<Role1Move />} />
+                    <Route path="/1/losjt" element={<Role1LO />} />
                 </>
             )}
             {id_role == '2' && (

@@ -5,7 +5,7 @@ import Select from 'react-select';
 
 const DetailPage = ({ detailId, alokasiInit, handleBackClick }) => {
 
-    console.clear();
+    // console.clear();
 
     const token = localStorage.getItem('token');
 
@@ -14,7 +14,7 @@ const DetailPage = ({ detailId, alokasiInit, handleBackClick }) => {
     const [alokasiOption, setAlokasiOption] = useState([]);
     const [selectedAlokasi, setSelectedAlokasi] = useState(null);
     const [move, setMove] = useState([]);
-    const [itemPO, setItemPO] = useState([]);
+    // const [itemPO, setItemPO] = useState([]);
 
     const fetchMove = async () => {
         if (!token) {
@@ -26,6 +26,7 @@ const DetailPage = ({ detailId, alokasiInit, handleBackClick }) => {
                     Authorization: token
                 }
             });
+            console.log(response.data.data);
             setMove(response.data.data);
         } catch (error) {
             console.log(error);
@@ -37,42 +38,42 @@ const DetailPage = ({ detailId, alokasiInit, handleBackClick }) => {
         fetchMove();
     }, [token, detailId]);
 
-    const fetchItemPO = async () => {
-        if (!token) {
-            navigate('/');
-        }
-        try {
-            const response = await axios.get(`http://localhost:3089/api/v1/itempo/po/${detailId}`, {
-                headers: {
-                    Authorization: token
-                }
-            });
-            if (response.data.data.length !== 0) {
-                const datafetch = response.data.data.map(dataitem => ({
-                    nomor_move: dataitem.nomor_move,
-                    tanggal_move: dataitem.tanggal_move,
-                    id_item_po: dataitem.id_item_po,
-                    id_po: dataitem.id_po,
-                    jenis_mobil: dataitem.jenis_mobil,
-                    nopol_mobil: dataitem.nopol_mobil,
-                    nama_driver: dataitem.nama_driver,
-                    telpon_driver: dataitem.telpon_driver,
-                    jenis_muatan: dataitem.jenis_muatan,
-                    jumlah_muatan: dataitem.jumlah_muatan
-                }));
-                setItemPO(datafetch);
-            } else {
-                setItemPO([]);
-            }
-        } catch (error) {
-            console.log(error);
-            setItemPO([]);
-        }
-    };
+    // const fetchItemPO = async () => {
+    //     if (!token) {
+    //         navigate('/');
+    //     }
+    //     try {
+    //         const response = await axios.get(`http://localhost:3089/api/v1/itempo/po/${detailId}`, {
+    //             headers: {
+    //                 Authorization: token
+    //             }
+    //         });
+    //         if (response.data.data.length !== 0) {
+    //             const datafetch = response.data.data.map(dataitem => ({
+    //                 nomor_move: dataitem.nomor_move,
+    //                 tanggal_move: dataitem.tanggal_move,
+    //                 id_item_po: dataitem.id_item_po,
+    //                 id_po: dataitem.id_po,
+    //                 jenis_mobil: dataitem.jenis_mobil,
+    //                 nopol_mobil: dataitem.nopol_mobil,
+    //                 nama_driver: dataitem.nama_driver,
+    //                 telpon_driver: dataitem.telpon_driver,
+    //                 jenis_muatan: dataitem.jenis_muatan_json.ayam,
+    //                 jumlah_muatan: dataitem.jumlah_muatan_json.telur
+    //             }));
+    //             setItemPO(datafetch);
+    //         } else {
+    //             setItemPO([]);
+    //         }
+    //     } catch (error) {
+    //         console.log(error);
+    //         setItemPO([]);
+    //     }
+    // };
 
-    useEffect(() => {
-        fetchItemPO();
-    }, [token, detailId]);
+    // useEffect(() => {
+    //     fetchItemPO();
+    // }, [token, detailId]);
 
     useEffect(() => {
         const fetchAlokasi = async () => {
@@ -123,13 +124,13 @@ const DetailPage = ({ detailId, alokasiInit, handleBackClick }) => {
 
     const formattedDate = move?.tanggal_move ? new Date(move.tanggal_move).toISOString().split("T")[0] : "";
 
-    const totalByJenisMuatan = itemPO.reduce((acc, item) => {
-        if (!acc[item.jenis_muatan]) {
-            acc[item.jenis_muatan] = 0;
-        }
-        acc[item.jenis_muatan] += item.jumlah_muatan;
-        return acc;
-    }, {});
+    // const totalByJenisMuatan = itemPO.reduce((acc, item) => {
+    //     if (!acc[item.jenis_muatan]) {
+    //         acc[item.jenis_muatan] = 0;
+    //     }
+    //     acc[item.jenis_muatan] += item.jumlah_muatan;
+    //     return acc;
+    // }, {});
 
     return (
         
@@ -182,6 +183,22 @@ const DetailPage = ({ detailId, alokasiInit, handleBackClick }) => {
                         <input className="form-control" type="text" id="customer" name='customer' placeholder="Customer" value={move?.customer} required readOnly />
                     </div>
                     <div className="col-md-3 col-sm-12 mb-3">
+                        <label htmlFor="jenis_mobil" className="form-label">Jenis Mobil</label>
+                        <input className="form-control" type="text" id="jenis_mobil" name='jenis_mobil' placeholder="Titik Muat" value={move?.jenis_mobil} required readOnly />
+                    </div>
+                    <div className="col-md-3 col-sm-12 mb-3">
+                        <label htmlFor="nopol_mobil" className="form-label">Nopol Mobil</label>
+                        <input className="form-control" type="text" id="nopol_mobil" name='nopol_mobil' placeholder="Titik Bongkar" value={move?.nopol_mobil} required readOnly />
+                    </div>
+                    <div className="col-md-3 col-sm-12 mb-3">
+                        <label htmlFor="nama_driver" className="form-label">Nama Driver</label>
+                        <input className="form-control" type="text" id="nama_driver" name='nama_driver' placeholder="Nama Driver" value={move?.nama_driver} required readOnly />
+                    </div>
+                    <div className="col-md-3 col-sm-12 mb-3">
+                        <label htmlFor="telpon_driver" className="form-label">Telepon Driver</label>
+                        <input className="form-control" type="text" id="telpon_driver" name='telpon_driver' placeholder="Status Move" value={move?.telpon_driver} required readOnly />
+                    </div>
+                    <div className="col-md-3 col-sm-12 mb-3">
                         <label htmlFor="titik_muat" className="form-label">Titik Muat</label>
                         <input className="form-control" type="text" id="titik_muat" name='titik_muat' placeholder="Titik Muat" value={move?.titik_muat} required readOnly />
                     </div>
@@ -194,76 +211,16 @@ const DetailPage = ({ detailId, alokasiInit, handleBackClick }) => {
                         <input className="form-control" type="text" id="jam_stand_by" name='jam_stand_by' placeholder="00:00" value={`${move?.jam_stand_by} WIB`} required readOnly />
                     </div>
                     <div className="col-md-3 col-sm-12 mb-3">
+                        <label htmlFor="jenis_muatan" className="form-label">Jenis Muatan</label>
+                        <input className="form-control" type="text" id="jenis_muatan" name='jenis_muatan' placeholder="Jenis Muatan" value={move?.jenis_muatan} required readOnly />
+                    </div>
+                    <div className="col-md-3 col-sm-12 mb-3">
+                        <label htmlFor="jumlah_muatan" className="form-label">Jumlah Muatan</label>
+                        <input className="form-control" type="text" id="jumlah_muatan" name='jumlah_muatan' placeholder="Jumlah Muatan" value={`${move?.jumlah_muatan} KG`} required readOnly />
+                    </div>
+                    <div className="col-md-3 col-sm-12 mb-3">
                         <label htmlFor="status_move" className="form-label">Status</label>
                         <input className="form-control" type="text" id="status_move" name='status_move' placeholder="Status Move" value={move?.status_move} required readOnly />
-                    </div>
-                    <div className="col-lg-12 mt-2">
-                        <div className="mb-3">
-                            <div className="divider text-start">
-                                <div className="divider-text">
-                                    <span className="menu-header-text fs-6">Informasi Item Move</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-md-12 mb-4 mb-md-0">
-                        <div className="table-responsive text-nowrap">
-                            <table className="table" style={{ fontSize: "13px" }}>
-                                <thead>
-                                    <tr>
-                                        <th className='fw-bold' >No</th>
-                                        <th className='fw-bold'>Nomor Move</th>
-                                        <th className='fw-bold'>Tanggal Move</th>
-                                        <th className='fw-bold'>Jenis Mobil</th>
-                                        <th className='fw-bold'>Nopol Mobil</th>
-                                        <th className='fw-bold'>Nama Driver</th>
-                                        <th className='fw-bold'>Telpon Driver</th>
-                                        <th className='fw-bold'>Jenis Muatan</th>
-                                        <th className='fw-bold'>Jumlah</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {itemPO.length > 0 ? (
-                                        itemPO.map((item, index) => (
-                                            <tr key={index}>
-                                                <td>{index + 1}</td>
-                                                <td>{item.nomor_move}</td>
-                                                <td>{formatDate(item.tanggal_move)}</td>
-                                                <td>{item.jenis_mobil}</td>
-                                                <td>{item.nopol_mobil}</td>
-                                                <td>{item.nama_driver}</td>
-                                                <td>{item.telpon_driver}</td>
-                                                <td>{item.jenis_muatan}</td>
-                                                <td>{item.jumlah_muatan.toLocaleString('id-ID')}</td>
-                                            </tr>
-                                        ))
-                                    ) : (
-                                        <tr>
-                                            <td colSpan="9" className="text-center">Data tidak tersedia</td>
-                                        </tr>
-                                    )}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    {/* Menampilkan total per jenis muatan */}
-                    <div className="col-md-12">
-                        <div className="table-responsive text-nowrap">
-                            <table className="table" style={{ fontSize: "13px" }}>
-                                <thead style={{ fontWeight: "bold" }}>
-                                    <tr>
-                                        <th className='fw-bold'>Total Muatan</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {Object.keys(totalByJenisMuatan).map((jenis, index) => (
-                                        <tr key={index}>
-                                            <td>{jenis} <span >{totalByJenisMuatan[jenis].toLocaleString('id-ID')}</span></td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
                     </div>
                 </div>
             </div>
